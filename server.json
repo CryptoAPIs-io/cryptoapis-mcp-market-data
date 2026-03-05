@@ -6,15 +6,24 @@
     "url": "https://github.com/CryptoAPIs-io/cryptoapis-mcp-market-data",
     "source": "github"
   },
-  "version": "0.2.2",
+  "version": "0.2.3",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@cryptoapis-io/mcp-market-data",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "transport": {
         "type": "stdio"
-      }
+      },
+      "environmentVariables": [
+        {
+          "description": "Crypto APIs API key",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true,
+          "name": "CRYPTOAPIS_API_KEY"
+        }
+      ]
     }
   ]
 }

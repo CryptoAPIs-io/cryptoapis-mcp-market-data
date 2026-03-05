@@ -1,5 +1,11 @@
 # @cryptoapis-io/mcp-market-data
 
+## 0.2.3
+
+### Patch Changes
+
+- Add environmentVariables to MCP Registry server.json
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@cryptoapis-io/mcp-market-data",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "MCP server for cryptocurrency asset prices, exchange rates, and market metadata via Crypto APIs",
   "license": "MIT",
   "author": "Crypto APIs, Inc.",
