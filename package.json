@@ -1,6 +1,6 @@
 {
   "name": "@cryptoapis-io/mcp-market-data",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "MCP server for cryptocurrency asset prices, exchange rates, and market metadata via Crypto APIs",
   "license": "MIT",
   "author": "Crypto APIs, Inc.",
@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/CryptoAPIs-io/cryptoapis-mcp-market-data.git"
   },
+  "mcpName": "io.github.CryptoAPIs-io/mcp-market-data",
   "keywords": [
     "mcp",
     "cryptoapis",
@@ -24,7 +25,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "server.json"
   ],
   "bin": {
     "cryptoapis-mcp-market-data": "dist/cli.js"

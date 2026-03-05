@@ -1,5 +1,11 @@
 # @cryptoapis-io/mcp-market-data
 
+## 0.2.2
+
+### Patch Changes
+
+- Add MCP Registry metadata (mcpName, server.json)
+
 ## 0.2.1
 
 ### Patch Changes

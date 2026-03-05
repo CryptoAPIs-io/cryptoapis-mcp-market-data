@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.CryptoAPIs-io/mcp-market-data",
+  "description": "MCP server for cryptocurrency asset prices, exchange rates, and market metadata via Crypto APIs",
+  "repository": {
+    "url": "https://github.com/CryptoAPIs-io/cryptoapis-mcp-market-data",
+    "source": "github"
+  },
+  "version": "0.2.2",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@cryptoapis-io/mcp-market-data",
+      "version": "0.2.2",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
