@@ -1,5 +1,12 @@
 # @cryptoapis-io/mcp-market-data
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @cryptoapis-io/mcp-shared@0.2.2
+
 ## 0.2.3
 
 ### Patch Changes
