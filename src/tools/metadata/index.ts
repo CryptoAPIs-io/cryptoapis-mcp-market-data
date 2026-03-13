@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { MetadataToolSchema, type MetadataToolInput } from "./schema.js";
 import { handleListSupportedAssets } from "./list-supported-assets/index.js";
@@ -15,7 +15,7 @@ export const metadataTool: McpToolDef<typeof MetadataToolSchema> = {
     credits: { "list-supported-assets": listSupportedAssetsCredits },
     inputSchema: MetadataToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: MetadataToolInput) => {
             let result: RequestResult<unknown>;
             result = await handleListSupportedAssets(client, {
@@ -24,6 +24,15 @@ export const metadataTool: McpToolDef<typeof MetadataToolSchema> = {
                 type: input.type,
                 context: input.context,
             });
+            logger.logInfo({
+                tool: "market_data_metadata",
+                action: input.action,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {

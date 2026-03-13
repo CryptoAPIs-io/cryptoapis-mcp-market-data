@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { AssetsToolSchema, type AssetsToolInput } from "./schema.js";
 import { getAssetDetailsByAssetId } from "../../api/assets/get-asset-details-by-asset-id/index.js";
@@ -21,23 +21,36 @@ export const assetsTool: McpToolDef<typeof AssetsToolSchema> = {
     },
     inputSchema: AssetsToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: AssetsToolInput) => {
             let result: RequestResult<unknown>;
             switch (input.action) {
                 case "get-asset-details-by-asset-id":
+                    if (!input.assetId) throw new Error("assetId is required for get-asset-details-by-asset-id");
                     result = await getAssetDetailsByAssetId(client, {
-                        assetId: input.assetId!,
+                        assetId: input.assetId,
                         context: input.context,
                     });
                     break;
                 case "get-asset-details-by-asset-symbol":
+                    if (!input.assetSymbol) throw new Error("assetSymbol is required for get-asset-details-by-asset-symbol");
                     result = await getAssetDetailsByAssetSymbol(client, {
-                        assetSymbol: input.assetSymbol!,
+                        assetSymbol: input.assetSymbol,
                         context: input.context,
                     });
                     break;
+                default:
+                    throw new Error(`Unknown action: ${(input as { action: string }).action}`);
             }
+            logger.logInfo({
+                tool: "market_data_assets",
+                action: input.action,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {

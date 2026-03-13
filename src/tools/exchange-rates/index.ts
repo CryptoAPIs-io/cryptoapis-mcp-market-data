@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { ExchangeRatesToolSchema, type ExchangeRatesToolInput } from "./schema.js";
 import { getExchangeRateByAssetSymbols } from "../../api/exchange-rates/get-exchange-rate-by-asset-symbols/index.js";
@@ -21,25 +21,40 @@ export const exchangeRatesTool: McpToolDef<typeof ExchangeRatesToolSchema> = {
     },
     inputSchema: ExchangeRatesToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: ExchangeRatesToolInput) => {
             let result: RequestResult<unknown>;
             switch (input.action) {
                 case "get-exchange-rate-by-asset-symbols":
+                    if (!input.fromAssetSymbol) throw new Error("fromAssetSymbol is required for get-exchange-rate-by-asset-symbols");
+                    if (!input.toAssetSymbol) throw new Error("toAssetSymbol is required for get-exchange-rate-by-asset-symbols");
                     result = await getExchangeRateByAssetSymbols(client, {
-                        fromAssetSymbol: input.fromAssetSymbol!,
-                        toAssetSymbol: input.toAssetSymbol!,
+                        fromAssetSymbol: input.fromAssetSymbol,
+                        toAssetSymbol: input.toAssetSymbol,
                         context: input.context,
                     });
                     break;
                 case "get-exchange-rate-by-asset-ids":
+                    if (!input.fromAssetId) throw new Error("fromAssetId is required for get-exchange-rate-by-asset-ids");
+                    if (!input.toAssetId) throw new Error("toAssetId is required for get-exchange-rate-by-asset-ids");
                     result = await getExchangeRateByAssetIds(client, {
-                        fromAssetId: input.fromAssetId!,
-                        toAssetId: input.toAssetId!,
+                        fromAssetId: input.fromAssetId,
+                        toAssetId: input.toAssetId,
                         context: input.context,
                     });
                     break;
+                default:
+                    throw new Error(`Unknown action: ${(input as { action: string }).action}`);
             }
+            logger.logInfo({
+                tool: "market_data_exchange_rates",
+                action: input.action,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {

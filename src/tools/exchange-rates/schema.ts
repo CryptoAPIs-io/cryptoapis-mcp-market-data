@@ -14,16 +14,6 @@ export const ExchangeRatesToolSchema = z
         fromAssetId: z.string().min(1).optional().describe("From asset ID - for get-exchange-rate-by-asset-ids"),
         toAssetId: z.string().min(1).optional().describe("To asset ID - for get-exchange-rate-by-asset-ids"),
     })
-    .merge(RequestMetadataSchema)
-    .refine(
-        (data) => {
-            if (data.action === "get-exchange-rate-by-asset-symbols")
-                return data.fromAssetSymbol != null && data.toAssetSymbol != null;
-            if (data.action === "get-exchange-rate-by-asset-ids")
-                return data.fromAssetId != null && data.toAssetId != null;
-            return true;
-        },
-        { message: "from/to symbols or from/to asset IDs required per action", path: ["action"] }
-    );
+    .merge(RequestMetadataSchema);
 
 export type ExchangeRatesToolInput = z.infer<typeof ExchangeRatesToolSchema>;
