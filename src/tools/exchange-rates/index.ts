@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { ExchangeRatesToolSchema, type ExchangeRatesToolInput } from "./schema.js";
@@ -14,6 +15,8 @@ Actions:
 
 export const exchangeRatesTool: McpToolDef<typeof ExchangeRatesToolSchema> = {
     name: "market_data_exchange_rates",
+    title: "Exchange rates",
+    annotations: READ_ONLY_TOOL,
     description: EXCHANGE_RATES_DESCRIPTION,
     credits: {
         "get-exchange-rate-by-asset-symbols": bySymbolsCredits,

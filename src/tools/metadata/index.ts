@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { MetadataToolSchema, type MetadataToolInput } from "./schema.js";
@@ -11,6 +12,8 @@ Actions:
 
 export const metadataTool: McpToolDef<typeof MetadataToolSchema> = {
     name: "market_data_metadata",
+    title: "Supported market data assets",
+    annotations: READ_ONLY_TOOL,
     description: METADATA_DESCRIPTION,
     credits: { "list-supported-assets": listSupportedAssetsCredits },
     inputSchema: MetadataToolSchema,

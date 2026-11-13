@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { AssetsToolSchema, type AssetsToolInput } from "./schema.js";
@@ -14,6 +15,8 @@ Actions:
 
 export const assetsTool: McpToolDef<typeof AssetsToolSchema> = {
     name: "market_data_assets",
+    title: "Asset details",
+    annotations: READ_ONLY_TOOL,
     description: ASSETS_DESCRIPTION,
     credits: {
         "get-asset-details-by-asset-id": byIdCredits,
